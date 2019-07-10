@@ -1,7 +1,9 @@
 import uuid from "uuid/v4";
 
-export default store => next => action => {
-  if (!action.generateId) return next(action);
+export default () => next => action => {
+  if (!action.generateId) {
+    return next(action);
+  }
 
   next({
     ...action,

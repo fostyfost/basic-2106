@@ -1,9 +1,11 @@
 import { ERROR, START, SUCCESS } from "../constants";
 
-export default store => next => async action => {
+export default () => next => async action => {
   const { callAPI, type, ...rest } = action;
 
-  if (!callAPI) return next(action);
+  if (!callAPI) {
+    return next(action);
+  }
 
   try {
     next({ ...rest, type: type + START });

@@ -1,5 +1,5 @@
 import { fromJS, Map } from "immutable";
-import { arrToMap } from "../utils";
+import { withKeyValue } from "../utils";
 import {
   ADD_REVIEW,
   ERROR,
@@ -9,7 +9,7 @@ import {
 } from "../constants";
 
 const defaultState = new Map({
-  entities: fromJS(arrToMap([])),
+  entities: fromJS(withKeyValue([])),
   loading: false,
   error: null
 });
@@ -34,7 +34,7 @@ export default (
     case LOAD_ALL_RESTAURANTS + SUCCESS:
       return state
         .set("loading", false)
-        .set("entities", fromJS(arrToMap(response)));
+        .set("entities", fromJS(withKeyValue(response)));
 
     default:
       return state;
