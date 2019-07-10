@@ -11,9 +11,7 @@ const Restaurant = ({ restaurant, isOpen, onBtnClick }) => (
   <List.Item
     style={{ paddingLeft: "8px" }}
     actions={[
-      <Button onClick={onBtnClick} data-id="menu-btn">
-        {isOpen ? "Hide menu" : "Show menu"}
-      </Button>
+      <Button onClick={onBtnClick}>{isOpen ? "Hide menu" : "Show menu"}</Button>
     ]}
   >
     <List.Item.Meta
@@ -23,7 +21,7 @@ const Restaurant = ({ restaurant, isOpen, onBtnClick }) => (
     <RestaurantRate restaurantId={restaurant.id} />
     <NewReview restaurantId={restaurant.id} />
     {isOpen && (
-      <div data-id="restaurant-body">
+      <div>
         <RestaurantMenu menu={restaurant.menu} />
         <ReviewList reviews={restaurant.reviews} />
       </div>

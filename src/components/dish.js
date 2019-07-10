@@ -12,22 +12,18 @@ const Dish = ({ dish, amount, handleDecrease, handleIncrease }) => (
     actions={[
       `$${dish.price}`,
       <>
-        <span style={{ margin: "0 12px" }} data-id="dish-amount">
-          {amount}
-        </span>
+        <span style={{ margin: "0 12px" }}>{amount}</span>
         <Button.Group>
           <Button
             type="primary"
             shape="circle"
             icon="minus"
-            data-id="dish-minus"
             onClick={() => handleDecrease(dish.id)}
           />
           <Button
             type="primary"
             shape="circle"
             icon="plus"
-            data-id="dish-plus"
             onClick={() => handleIncrease(dish.id)}
           />
         </Button.Group>
