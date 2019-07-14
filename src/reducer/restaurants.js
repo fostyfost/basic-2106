@@ -1,7 +1,7 @@
 import { fromJS, Map } from "immutable";
 import { withKeyValue } from "../utils";
 import {
-  ADD_REVIEW,
+  CREATE_NEW_USER_REVIEW,
   ERROR,
   LOAD_ALL_RESTAURANTS,
   START,
@@ -10,16 +10,16 @@ import {
 
 const defaultState = new Map({
   entities: fromJS(withKeyValue([])),
-  loading: false,
+  loading: true,
   error: null
 });
 
 export default (
   state = defaultState,
-  { type, payload, id, response, error }
+  { type, payload, id, restaurants, error }
 ) => {
   switch (type) {
-    case ADD_REVIEW:
+    case CREATE_NEW_USER_REVIEW:
       return state.updateIn(
         ["entities", payload.restaurantId, "reviews"],
         reviews => reviews.push(id)
@@ -29,12 +29,12 @@ export default (
       return state.set("loading", true);
 
     case LOAD_ALL_RESTAURANTS + ERROR:
-      return state.set("loading", false).set("error", error);
+      return state.set("error", error).set("loading", false);
 
     case LOAD_ALL_RESTAURANTS + SUCCESS:
       return state
-        .set("loading", false)
-        .set("entities", fromJS(withKeyValue(response)));
+        .set("entities", fromJS(withKeyValue(restaurants)))
+        .set("loading", false);
 
     default:
       return state;

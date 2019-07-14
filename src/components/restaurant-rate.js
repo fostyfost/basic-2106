@@ -12,6 +12,7 @@ RestaurantRate.propTypes = {
   rating: PropTypes.number
 };
 
+// noinspection JSUnusedGlobalSymbols
 RestaurantRate.defaultProps = {
   rating: 0
 };

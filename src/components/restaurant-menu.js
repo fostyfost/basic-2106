@@ -5,12 +5,22 @@ import Dish from "./dish";
 
 class RestaurantMenu extends Component {
   static propTypes = {
-    menu: PropTypes.array.isRequired
+    menu: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    )
+  };
+
+  static defaultProps = {
+    menu: []
   };
 
   state = {
     error: null
   };
+
+  componentDidMount() {
+    console.log("did mo");
+  }
 
   componentDidCatch(error, errorInfo) {
     this.setState({ error });

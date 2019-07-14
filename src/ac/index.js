@@ -1,8 +1,9 @@
 import {
   ADD_ITEM,
-  ADD_REVIEW,
+  CREATE_NEW_USER_REVIEW,
   ERROR,
   LOAD_ALL_RESTAURANTS,
+  LOAD_RESTAURANTS_REVIEWS,
   REMOVE_ITEM,
   SET_MIN_RATING,
   START,
@@ -24,21 +25,42 @@ export const setMinRating = minRating => ({
   payload: { minRating }
 });
 
-export const addReview = (review, restaurantId) => ({
-  type: ADD_REVIEW,
-  payload: { review, restaurantId },
+export const createNewUserReview = ({
+  restaurantId,
+  userName,
+  text,
+  rating
+}) => ({
+  type: CREATE_NEW_USER_REVIEW,
+  payload: { restaurantId, userName, text, rating },
   generateId: true
 });
 
 export const loadAllRestaurants = () => async dispatch => {
+  let restaurants = [];
+
   try {
     dispatch({ type: LOAD_ALL_RESTAURANTS + START });
 
-    const rawRes = await fetch("/api/restaurants");
-    const response = await rawRes.json();
+    const rawRestaurantsResponse = await fetch("/api/restaurants");
 
-    dispatch({ type: LOAD_ALL_RESTAURANTS + SUCCESS, response });
+    restaurants = await rawRestaurantsResponse.json();
+
+    dispatch({ type: LOAD_ALL_RESTAURANTS + SUCCESS, restaurants });
   } catch (error) {
     dispatch({ type: LOAD_ALL_RESTAURANTS + ERROR, error });
+  }
+
+  try {
+    let reviewsIds = restaurants
+      .reduce((acc, restaurant) => [].concat(acc, restaurant.reviews), [])
+      .join(",");
+
+    const rawReviewsResponse = await fetch(`/api/reviews?ids=${reviewsIds}`);
+    const reviews = await rawReviewsResponse.json();
+
+    dispatch({ type: LOAD_RESTAURANTS_REVIEWS + SUCCESS, reviews });
+  } catch (error) {
+    dispatch({ type: LOAD_RESTAURANTS_REVIEWS + ERROR, error });
   }
 };

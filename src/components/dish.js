@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import * as PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Card, Button } from "antd";
@@ -11,7 +11,7 @@ const Dish = ({ dish, amount, handleDecrease, handleIncrease }) => (
     bordered
     actions={[
       `$${dish.price}`,
-      <>
+      <Fragment>
         <span style={{ margin: "0 12px" }}>{amount}</span>
         <Button.Group>
           <Button
@@ -27,7 +27,7 @@ const Dish = ({ dish, amount, handleDecrease, handleIncrease }) => (
             onClick={() => handleIncrease(dish.id)}
           />
         </Button.Group>
-      </>
+      </Fragment>
     ]}
   >
     <Card.Meta title={dish.name} description={dish.ingredients.join(", ")} />
