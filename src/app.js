@@ -3,7 +3,7 @@ import { Route, NavLink, Switch } from "react-router-dom";
 import "antd/dist/antd.css";
 import OrderForm from "./components/order-form";
 import Cart from "./components/cart";
-import Filter from "./components/filter";
+import RateFilter from "./components/rate-filter";
 import RestaurantsPage from "./components/routes/restaurants";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
       <NavLink to="/filter">Filter</NavLink>
 
       <Switch>
-        <Route path="/filter" exact component={Filter} />
+        <Route path="/filter" exact component={RateFilter} />
         <Route
           path="/restaurants/:id/review"
           render={({ id }) => <h1>Add a review for {id}</h1>}

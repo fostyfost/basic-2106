@@ -1,34 +1,35 @@
 import React from "react";
+import * as PropTypes from "prop-types";
 import { Avatar, Button, List } from "antd";
-import PropTypes from "prop-types";
+import { idPropTypes } from "../utils";
 import ReviewList from "./review-list";
 import RestaurantMenu from "./restaurant-menu";
-import RestaurantMap from "./restaurant-map";
 import RestaurantRate from "./restaurant-rate";
 import { connect } from "react-redux";
+import NewReview from "./new-review";
 import { restaurantSelector } from "../selectors";
 
-function Restaurant({ restaurant, isOpen }) {
-  if (!restaurant) return null;
-
-  const body = isOpen && (
-    <div data-id="restaurant-body">
-      <RestaurantMenu restaurant={restaurant} />
-      <ReviewList restaurant={restaurant} />
-      <RestaurantMap />
-    </div>
-  );
-  return (
-    <List.Item style={{ paddingLeft: "8px" }}>
-      <List.Item.Meta
-        avatar={<Avatar shape="square" src={restaurant.image} />}
-        title={restaurant.name}
-      />
-      <RestaurantRate restaurant={restaurant} />
-      {body}
-    </List.Item>
-  );
-}
+const Restaurant = ({ restaurant, isOpen, onBtnClick }) => (
+  <List.Item
+    style={{ paddingLeft: "8px" }}
+    actions={[
+      <Button onClick={onBtnClick}>{isOpen ? "Hide menu" : "Show menu"}</Button>
+    ]}
+  >
+    <List.Item.Meta
+      avatar={<Avatar shape="square" src={restaurant.image} />}
+      title={restaurant.name}
+    />
+    <RestaurantRate restaurantId={restaurant.id} />
+    <NewReview restaurantId={restaurant.id} />
+    {isOpen && (
+      <div>
+        <RestaurantMenu menu={restaurant.menu} />
+        <ReviewList reviews={restaurant.reviews} />
+      </div>
+    )}
+  </List.Item>
+);
 
 Restaurant.propTypes = {
   isOpen: PropTypes.bool,

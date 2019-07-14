@@ -1,5 +1,4 @@
 import { Record, Set } from "immutable";
-import { normalizedDishes } from "../fixtures";
 import { arrToMap } from "../utils";
 import { LOAD_MENU, START, SUCCESS } from "../constants";
 
@@ -11,7 +10,7 @@ const DishRecord = Record({
 });
 
 const ReducerRecord = Record({
-  entities: arrToMap(normalizedDishes, DishRecord),
+  entities: arrToMap([], DishRecord),
   loading: new Set(),
   loaded: new Set()
 });

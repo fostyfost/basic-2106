@@ -21,12 +21,13 @@ function RestaurantsList({
     loadAllReviews();
   }, []);
 
-  if (loading)
+  if (loading) {
     return (
       <div>
         <Spin />
       </div>
     );
+  }
 
   return (
     <List
