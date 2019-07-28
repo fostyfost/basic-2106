@@ -1,9 +1,8 @@
 import {
+  LOAD_LOCALE,
   ADD_ITEM,
   ADD_REVIEW,
-  DECREMENT,
   ERROR,
-  INCREMENT,
   LOAD_ALL_RESTAURANTS,
   LOAD_ALL_REVIEWS,
   LOAD_MENU,
@@ -15,12 +14,10 @@ import {
 import { matchPath } from "react-router-dom";
 import { push } from "connected-react-router";
 
-export const increment = () => ({
-  type: INCREMENT
-});
-
-export const decrement = () => ({
-  type: DECREMENT
+export const loadLocale = localeCode => ({
+  type: LOAD_LOCALE,
+  payload: localeCode,
+  callAPI: `/locale/${localeCode}.json`
 });
 
 export const addItem = id => ({
@@ -43,13 +40,6 @@ export const addReview = (review, restaurantId) => ({
   payload: { review, restaurantId },
   generateId: true
 });
-
-/*
-export const loadAllRestaurants = () => ({
-  type: LOAD_ALL_RESTAURANTS,
-  callAPI: "/api/restaurants"
-});
-*/
 
 export const loadAllRestaurants = () => async (dispatch, getState) => {
   try {

@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { routerMiddleware } from "connected-react-router";
 import reducer from "../reducer";
@@ -6,12 +6,14 @@ import generateId from "../middlewares/generateId";
 import api from "../middlewares/api";
 import history from "../history";
 
+// noinspection JSUnresolvedVariable
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const middlewares = [thunk, routerMiddleware(history), generateId, api];
 
-const enhancer = applyMiddleware(...middlewares);
-const store = createStore(reducer, enhancer);
-
-//dev only. No need in prod
-window.store = store;
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
 
 export default store;

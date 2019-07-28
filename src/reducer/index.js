@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
+import locales from "./locales";
 import counterReducer from "./counter";
 import order from "./order";
 import filters from "./filters";
@@ -10,6 +11,7 @@ import users from "./users";
 import history from "../history";
 
 export default combineReducers({
+  locales,
   count: counterReducer,
   order,
   filters,

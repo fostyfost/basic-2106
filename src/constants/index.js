@@ -1,3 +1,5 @@
+export const LOAD_LOCALE = "LOAD_LOCALE";
+
 export const INCREMENT = "INCREMENT";
 export const DECREMENT = "DECREMENT";
 
