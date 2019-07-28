@@ -1,4 +1,5 @@
 import {
+  SET_CURRENT_LOCALE,
   LOAD_LOCALE,
   ADD_ITEM,
   ADD_REVIEW,
@@ -13,6 +14,11 @@ import {
 } from "../constants";
 import { matchPath } from "react-router-dom";
 import { push } from "connected-react-router";
+
+export const setCurrentLocaleCode = localeCode => ({
+  type: SET_CURRENT_LOCALE,
+  payload: { localeCode }
+});
 
 export const loadLocale = localeCode => ({
   type: LOAD_LOCALE,

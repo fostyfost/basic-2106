@@ -1,3 +1,5 @@
 {
-  "APPLICATION_NAME": "Delivery App"
+  "APPLICATION_NAME": "Delivery App",
+  "RESTAURANTS": "Restaurants",
+  "RESTAURANT": "Restaurant"
 }

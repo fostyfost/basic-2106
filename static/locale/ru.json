@@ -1,3 +1,5 @@
 {
-  "APPLICATION_NAME": "Приложение \"Доставка\""
+  "APPLICATION_NAME": "Приложение \"Доставка\"",
+  "RESTAURANTS": "Рестораны",
+  "RESTAURANT": "Ресторан"
 }

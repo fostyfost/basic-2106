@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "antd/dist/antd.css";
-import { Input, Radio, Spin } from "antd";
+import { Input, Spin } from "antd";
+import LocaleSelector from "./components/locale-selector";
 import Cart from "./components/cart";
 import Filter from "./components/filter";
 import RestaurantsPage from "./components/routes/restaurants";
@@ -12,33 +13,20 @@ import { Provider as LocaleProvider } from "./contexts/locale";
 import { useInputValue } from "./custom-hooks/use-input-value";
 import Menu, { MenuItem } from "./components/menu";
 import {
-  localeLoadedSelector,
+  currentLocaleCodeSelector,
   localeLoadingSelector,
   localeSelector
 } from "./selectors";
 import { loadLocale } from "./ac";
 
-const defaultLocaleCode = "ru";
-
-/*const loadLocale = async lang => {
-  try {
-    const data = await fetch(`/locale/${lang}.json`);
-    return await data.json();
-  } catch (error) {
-    console.warn(error);
-    return {};
-  }
-};*/
-
-const App = ({ translation, loaded, loading, loadLocale }) => {
+const App = ({ currentLocaleCode, locale, loading, loadLocale }) => {
   const [username, setUserName] = useInputValue("Roma");
-  const [localeCode, setLocaleCode] = useInputValue(defaultLocaleCode);
 
   useEffect(() => {
-    if (!loaded && !loading) {
-      loadLocale({ localeCode });
+    if (!locale || !locale[currentLocaleCode]) {
+      loadLocale(currentLocaleCode);
     }
-  }, [loadLocale, loaded, loading, localeCode]);
+  }, [loadLocale, currentLocaleCode, locale]);
 
   if (loading) {
     return (
@@ -50,16 +38,15 @@ const App = ({ translation, loaded, loading, loadLocale }) => {
 
   return (
     <div>
-      <LocaleProvider value={translation}>
-        <Radio.Group value={localeCode} size="small" onChange={setLocaleCode}>
-          <Radio.Button value="ru">Русский</Radio.Button>
-          <Radio.Button value="en">English</Radio.Button>
-        </Radio.Group>
+      <LocaleProvider value={locale}>
+        <LocaleSelector />
         <Menu>
           <Menu.Item to="/checkout">
             <Cart />
           </Menu.Item>
-          <MenuItem to="/restaurants">Restaurants</MenuItem>
+          <MenuItem to="/restaurants">
+            {locale && locale["RESTAURANTS"]}
+          </MenuItem>
           <MenuItem to="/filter" children={"Filter"} />
         </Menu>
         <div>
@@ -86,9 +73,9 @@ const App = ({ translation, loaded, loading, loadLocale }) => {
 
 export default connect(
   (state, ownProps) => ({
-    loading: localeLoadingSelector(state, ownProps),
-    loaded: localeLoadedSelector(state, ownProps),
-    translation: localeSelector(state, "ru")
+    currentLocaleCode: currentLocaleCodeSelector(state),
+    loading: localeLoadingSelector(state),
+    locale: localeSelector(state, ownProps)
   }),
   { loadLocale }
 )(App);

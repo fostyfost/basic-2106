@@ -1,4 +1,5 @@
 export const LOAD_LOCALE = "LOAD_LOCALE";
+export const SET_CURRENT_LOCALE = "SET_CURRENT_LOCALE";
 
 export const INCREMENT = "INCREMENT";
 export const DECREMENT = "DECREMENT";

@@ -1,37 +1,26 @@
-import { Record, Set } from "immutable";
-import { LOAD_LOCALE, START, SUCCESS } from "../constants";
+import { Record } from "immutable";
+import { SET_CURRENT_LOCALE, LOAD_LOCALE, START, SUCCESS } from "../constants";
 
 const ReducerRecord = Record({
   entities: {},
-  loading: new Set(),
-  loaded: new Set()
+  currentLocaleCode: "ru",
+  loading: false
 });
 
-export default (
-  localesState = new ReducerRecord(),
-  { type, payload: { localeCode } },
-  response
-) => {
+export default (state = new ReducerRecord(), { type, payload }, response) => {
   switch (type) {
+    case SET_CURRENT_LOCALE:
+      return state.set("currentLocaleCode", payload.localeCode);
+
     case LOAD_LOCALE + START:
-      return localesState.updateIn(["loading"], loading =>
-        loading.add(localeCode)
-      );
+      return state.set("loading", true);
 
     case LOAD_LOCALE + SUCCESS:
-      return localesState
-        .set("entities", { [localeCode]: response })
-        .updateIn(["loading"], loading => loading.remove(localeCode))
-        .updateIn(["loaded"], loading => loading.add(localeCode));
-
-    /*
-    return state.updateIn(
-        ["entities", payload.restaurantId, "reviews"],
-        reviews => reviews.concat(id)
-      );
-     */
+      return state
+        .set("entities", { [payload.localeCode]: response })
+        .set("loading", false);
 
     default:
-      return localesState;
+      return state;
   }
 };

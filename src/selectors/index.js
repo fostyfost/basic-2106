@@ -1,13 +1,12 @@
 import { createSelector } from "reselect";
 
-export const localeSelector = (state, localeCode) =>
-  state.locales.getIn(["entities", localeCode]);
+export const currentLocaleCodeSelector = state =>
+  state.locales.get("currentLocaleCode");
 
-export const localeLoadingSelector = (state, { localeCode }) =>
-  state.locales.loading.get(localeCode);
+export const localeSelector = (state, { currentLocaleCode }) =>
+  state.locales.getIn(["entities", currentLocaleCode]);
 
-export const localeLoadedSelector = (state, { localeCode }) =>
-  state.locales.loaded.get(localeCode);
+export const localeLoadingSelector = state => state.locales.get("loading");
 
 const restaurantsSelector = state => state.restaurants.entities;
 const filtersSelector = state => state.filters;
